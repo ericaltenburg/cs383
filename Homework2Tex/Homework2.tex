@@ -1,0 +1,297 @@
+% Homework Template for CS-383
+% Eric Altenburg
+
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{lstautogobble}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+
+% Edit these as appropriate
+\newcommand\course{CS-383}
+\newcommand\hwnumber{2}                  			% <-- homework number
+\newcommand\Name{Eric Altenburg}          		% <-- Name of person #1
+\newcommand\ProfessorName{Prof. Peyrovian}	% <-- Professor name
+\newcommand\setProbNum[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
+
+% For Code
+\usepackage{listings}
+\usepackage{color}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{frame=tb,
+language=C,
+aboveskip=3mm,
+belowskip=3mm,
+showstringspaces=false,
+columns=flexible,
+basicstyle={\small\ttfamily},
+numbers=none,
+numberstyle=\tiny\color{gray},
+keywordstyle=\color{blue},
+commentstyle=\color{dkgreen},
+stringstyle=\color{mauve},
+breaklines=true,
+breakatwhitespace=true,
+tabsize=3,
+autogobble = true
+}
+
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\Name}
+\lhead{\Name \\ \today}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\ProfessorName \\ \course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+
+\begin{document}
+
+
+I pledge my honor that I have abided by the Stevens Honor System. -Eric Altenburg
+
+
+% This is the current chapter you are working on (#X.1)
+\section*{Chapter 2}
+
+% This will begin the actual things you are working on (#X.Y)
+\begin{enumerate}
+	% 2.1
+	\setProbNum{1}
+	\item 
+	// Assign a temp register to X9\\
+	SUB		X9, X2, \#5\\
+	ADD		X0, X1, X9
+	
+	% 2.3
+	\setProbNum{3}
+	\item
+	// Assign a temp register to X9\\
+	SUB		X9, X3, X4\\
+	LSL 		X9, X9, \#3\\
+	ADD		X9, X9, X6\\
+	LDUR	X10, $[X9, \#0$]\\
+	STUR	X10, $[X7, \#64$]
+	
+	%2.4
+	\setProbNum{4}
+	\item
+	\begin{lstlisting} [frame=none, language=C]
+		B[g] = A[f] + A[f+1];
+	\end{lstlisting}
+	
+	%2.5
+	\setProbNum{5}
+	\item
+	LSL 		X9, X0, \#3\\
+	ADD 	X9, X6, X9\\
+	LSL		X10, X1, \#3\\
+	ADD 	X10, X7, X10\\
+	LDUR 	X0, $[X9, \#0$]\\\\
+	
+	LDUR	X9, $[X9, \#8$] // This is the combined LEGv8 code\\
+	ADD 	X9, X9, X0\\
+	STUR 	X9, $[X10, \#0$] 
+	
+	%2.9
+	\setProbNum{9}
+	\item
+	\begin{lstlisting}[frame=none, language=C]
+		f = &A[0] + &A[0];
+	\end{lstlisting}
+	
+	%2.10
+	\setProbNum{10}
+	\item
+	ADDI	X9, X6, \#8\\
+	\begin{tabular}{| c | c | c | c |}
+		\hline
+		opcode & immediate & Rn & Rd\\
+		\hline
+		1001000100 & 000000001000 & 00110 & 01001\\
+		\hline
+		580 & 8 & 6 & 9\\
+		\hline
+	\end{tabular}	
+	
+	ADD		X10, X6, XZR\\
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		opcode & Rm & shamt & Rn & Rd\\
+		\hline
+		10001011000 & 11111 & 000000 & 00110 & 01010\\
+		\hline
+		1112 & 31 & 0 & 6 & 10\\
+		\hline
+	\end{tabular}
+	
+	STUR	X10, $[X9, \#0$]\\
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		opcode & address & op2 & Rn & Rt\\
+		\hline
+		11111000000 & 000000000 & 00 & 01001 & 01010\\
+		\hline
+		1984 & 0 & 0 & 9 & 10\\
+		\hline
+	\end{tabular}
+	
+	LDUR	X9, $[X9, \#0$]\\
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		opcode & address & op2 & Rn & Rt\\
+		\hline
+		11111000010 & 000000000 & 00 & 01001 & 01001\\
+		\hline
+		1986 & 0 & 0 & 9 & 9\\
+		\hline
+	\end{tabular}
+
+	ADD		X0, X9, X10\\
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		opcode & Rm & shamt & Rn & Rd\\
+		\hline
+		10001011000 & 01010 & 000000 & 01001 & 00000\\
+		\hline
+		1112 & 10 & 0 & 9 & 0\\
+		\hline
+	\end{tabular}
+	
+	%2.22
+	\setProbNum{22}
+	\item
+	$X1 = 2$
+	
+	%2.25
+	\setProbNum{25}
+	\item
+		\begin{enumerate}[label=(\arabic*)]
+			%1
+			\setProbNum{1}
+			\item 
+			$X0 = 20$
+		\end{enumerate}
+	
+	%2.41
+	\setProbNum{41}
+	\item
+		All numbers are in terms of $10^6$, however, in the following equations, I removed it to make them more readable.
+		\begin{enumerate}[label=(\arabic*)]
+			%1
+			\setProbNum{1}
+			\item
+				\begin{align*}
+					CPI_{0} &= 1* \frac{500}{900} + 10 * \frac{300}{900} + 3 * \frac{100}{900}\\
+					&= \frac{500}{900} + \frac{3000}{900} + \frac{300}{900}\\
+					&= \frac{3800}{900}\\
+					&= 4.\overline{2}\\
+					Arithmetic\; Instructions &= 0.75 * 500\\
+					&= 375\\
+					CPU_{0} &= CPI_{0} * f * 900\\
+					&= 3800f\\
+					CPI_{new} &= 1* \frac{375}{775} + 10 * \frac{300}{775} + 3 * \frac{100}{775}\\
+					&= \frac{375}{775} + \frac{3000}{775} + \frac{300}{775}\\
+					&= \frac{3675}{775}\\
+					&= 4.74\\
+					CPU_{new} &= CPI_{new} * f * 775 * 1.10\\
+					&= 4042.5f
+				\end{align*}
+				This would not be a good idea as the total execution time has increased from what it used to be.
+			
+			%2
+			\setProbNum{2}
+			\item
+				\begin{align*}
+					Arithmetic\; CPI_{new} &= 1*\frac{1}{2} = \frac{1}{2}\\
+					CPI_{new} &= \frac{1}{2} * \frac{500}{900} + 10 * \frac{300}{900} + 3 * \frac{100}{900}\\
+					&= 3.9\overline{4}\\
+					Speedup_{formula} &= \frac{high}{low}\\
+					Speedup_{arithmetic} &= \frac{4.\overline{2}}{3.9\overline{4}} = 1.07\\
+					7\% \;increase\\\\
+					Arithmetic\; CPI_{10\; times} &= 1* \frac{1}{10} = \frac{1}{10}\\
+					CPI_{10\; times} &= \frac{1}{10} * \frac{500}{900} + 10 * \frac{300}{900} + 3 * \frac{100}{900}\\
+					&= 3.7\overline{2}\\
+					Speedup_{10\; times} &= \frac{4.\overline{2}}{3.7\overline{2}} = 1.13\\
+					13\% \;increase
+				\end{align*}
+		\end{enumerate}
+	
+	%2.42
+	\setProbNum{42}
+	\item
+		\begin{enumerate}[label=(\arabic*)]
+			%1
+			\setProbNum{1}
+			\item
+				\begin{align*}
+					CPI_{avg} &= 0.7 * 2 + 0.1 * 6 + 0.2 * 3\\
+					&= 2.6
+				\end{align*}
+				
+			%2
+			\setProbNum{2}
+			\item
+				\begin{align*}
+					IPC_{0} &= 1/2.6 = 0.3846\\
+					IPC_{new} &= IPC_{0} * 1.25 = .4808\\
+					CPI_{new} &= \frac{1}{IPC_{new}} = 2.08\\\\
+					CPI_{new} &= 0.7 * Arithmetic\; Cycles + 0.1 * 6 + 0.2 * 3\\
+					2.08 &= 0.7*Arithmetic\; Cycles + 1.2\\
+					0.7 * Arithmetic\; Cycles &= 0.88\\
+					Arithmetic\; Cycles &= 1.2571 \approx 1
+				\end{align*}
+				It doesn't make sense to have a float for the number of cycles, so it was approximated to 1.
+		\end{enumerate}
+
+
+\end{enumerate}
+
+
+\end{document}
