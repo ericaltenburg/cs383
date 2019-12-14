@@ -1,0 +1,205 @@
+%=======================02-713 LaTeX template, following the 15-210 template==================
+%
+% You don't need to use LaTeX or this template, but you must turn your homework in as
+% a typeset PDF somehow.
+%
+% How to use:
+%    1. Update your information in section "A" below
+%    2. Write your answers in section "B" below. Precede answers for all 
+%       parts of a question with the command "\question{n}{desc}" where n is
+%       the question number and "desc" is a short, one-line description of 
+%       the problem. There is no need to restate the problem.
+%    3. If a question has multiple parts, precede the answer to part x with the
+%       command "\part{x}".
+%    4. If a problem asks you to design an algorithm, use the commands
+%       \algorithm, \correctness, \runtime to precede your discussion of the 
+%       description of the algorithm, its correctness, and its running time, respectively.
+%    5. You can include graphics by using the command \includegraphics{FILENAME}
+%    6. If you want to use code, use \begin{lstlisting} after making modifications to the lstset.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1: #2}\vspace{.5em}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}\par}
+\newcommand\algorithm{\vspace{.10in}\textbf{Algorithm: }}
+\newcommand\correctness{\vspace{.10in}\textbf{Correctness: }}
+\newcommand\runtime{\vspace{.10in}\textbf{Running time: }}
+
+\colorlet{light-gray}{gray!10}
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{main-color}{rgb}{0.6627, 0.7176, 0.7764}
+\definecolor{back-color}{rgb}{0.1686, 0.1686, 0.1686}
+\definecolor{string-color}{rgb}{0.3333, 0.5254, 0.345}
+\definecolor{key-color}{rgb}{0.8, 0.47, 0.196}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{azure(colorwheel)}{rgb}{0.0, 0.5, 1.0}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+
+\definecolor{shadecolor}{RGB}{150,150,150}
+
+\lstset{
+  language=C,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javared},
+    keywordstyle = {\color{javapurple}},
+    keywordstyle = [2]{\color{asparagus}},
+    keywordstyle = [3]{\color{azure(colorwheel)}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {;,:,@@,|,->,>>=,val},
+    morekeywords = [2]{;,:,*,@@},
+    morekeywords = [3]{->,|},
+    morekeywords = [4]{>>=},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{(*}{*)},
+numbers=left,
+numberstyle=\tiny\color{black},
+stepnumber=2,
+numbersep=10pt,
+tabsize=4,
+showspaces=false,
+showstringspaces=false,
+escapeinside={(*@}{@*)},
+% frame=single,
+backgroundcolor=\color{light-gray},
+frame=lines}
+\pagestyle{fancyplain}
+\lhead{\textbf{\NAME}}
+\chead{\textbf{{\COURSE} HW\HWNUM}}
+\rhead{\today}
+\begin{document}\raggedright
+%Section A==============Change the values below to match your information==================
+\newcommand\NAME{Eric Altenburg}  % your name
+\newcommand\COURSE{CS-383}
+\newcommand\HWNUM{5}              % the homework number
+%Section B==============Put your answers to the questions below here=======================
+
+% no need to restate the problem --- the graders know which problem is which,
+% but replacing "The First Problem" with a short phrase will help you remember
+% which problem this is when you read over your homeworks to study.
+
+\begin{center}
+	\textit{\textbf{Pledge:} I pledge my honor that I have abided by the Stevens Honor System.} - \textbf{\NAME}
+\end{center}
+
+
+\question{6.4}{Page 579 - 580} % In other but check
+
+	\part{6.4.1}
+		Each iteration of the loop segment of the code requires 17 cycles repeated 999 times plus the additional 3 instructions before the loop gives a total cycle count of $17 * 999 + 3 = \textnormal{\textbf{16,986}}$.
+		The break down of the stall insertions can be seen below:
+		\begin{center}
+		\begin{tabular}{lll}
+			& MOV & X10 \#8000\\
+			& ADD & X2, X0, X10\\
+			& ADDI & X1, X0, \#16\\
+			LOOP: & LDUR & D0, [X1, \#-16]\\
+			& LDUR & D2, [X1, \#-8]\\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& FADDD & D4, D0, D2\\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& STALL & \\
+			& STUR & D4, [X1, \#0]\\
+			& ADDI & X1, X1, \#8\\
+			& CMP & X1, X2\\
+			& B.LE & LOOP\\
+		\end{tabular}
+		\end{center}
+	
+	
+\question{6.7}{Page 582} % Provide reason
+
+	\part{6.7.1}
+		\begin{center}
+		\begin{tabular}{cccc}
+			x=2 & y=2 & w=1 & z=0\\
+			x=2 & y=2 & w=3 & z=0\\
+			x=2 & y=2 & w=5 & z=0\\
+			\\
+			x=2 & y=2 & w=1 & z=2\\
+			x=2 & y=2 & w=3 & z=2\\
+			x=2 & y=2 & w=5 & z=2\\
+			\\
+			x=2 & y=2 & w=1 & z=4\\
+			x=2 & y=2 & w=3 & z=4\\
+			x=2 & y=2 & w=5 & z=4\\
+		\end{tabular}
+		\end{center}\par
+		X and Y are held constant at 2, however, W and Z have some variance due to the possibility that some combination of X being 0 or 2 and Y being 0 or 2 could happen for a given moment.
+	
+\question{6.16}{Page 586}
+	
+	\part{6.16.1}
+		For an n-cube of order N, being $2^{N}$, the network can handle $N-1$ broken links while still guaranteeing there be a path to all nodes in the network.
+		
+	
+\question{1}{Non-textbook}
+
+	Consider the following code, which multiplies two vectors that contain single precision floating point values:\par
+	\begin{lstlisting}
+		for(i = 0; i < 100; i++) {
+			c[i] = a[i] * b[i];
+		}
+	\end{lstlisting}\par
+	We define the Arithmetic Intensity of a code as the number of operations to run the program (for example in C) divided by the number of bytes accessed in the main memory. Arithmetic Intensity is a good measure of arithmetic operations versus the number of bytes transferred between memory and CPU so we can see whether the system is computation bound or memory bandwidth bound as we discussed in class. What is the arithmetic intensity of the above code?\par
+	
+	$Arithmetic\:Intensity=\frac{\#operations}{\#bytes\:accessed}$\par
+	SP number is 4-bytes.\par
+	In each iteration of the above code, the total bytes read from the main memory is $2*4=8$-bytes (a[i] and b[i]).\par
+	Also, in each iteration, the total bytes written to the main memory is $1*4=4$-bytes (c[i]).\par
+	Total is 12-bytes. The number of operations done is 1 (one single multiplication).\par
+	$Arithmetic\:Intensity=\frac{1}{12}=0.08\overline{3}$\par
+	$\boldsymbol{0.08\overline{3}}\:or\: \boldsymbol{8.\overline{3}\%}$
+	
+	
+
+\question{2}{Non-textbook}
+	
+	Assume a GPU that runs at 1.5 GHz with 16 SIMD processors, each having 16 single –precision FP units. This GPU is supported by a 100GB/s off-chip memory. Assume all memory latencies can be hidden. Assume each operation is an addition.\par
+	\begin{enumerate}[(a)]
+		\item Ignoring memory bandwidth, what is the peak SP FP operation in GFLOP/sec.?
+		\item Is this throughput sustainable given the bandwidth? Justify your answer.
+	\end{enumerate}
+	
+	\part{a}
+		Peak SP FP:\par
+		$1.5 * 16 * 16 = 384$ GFLOP/sec.
+	
+	\part{b}
+		Assuming each SP operation requires 4-byte two operands and outputs only one 4-byte result, the memory bandwidth would be:\par
+		$\frac{12\:bytes}{1\:FLOP} * \frac{384\: GFLOP}{1\:sec.} = 4.608$ TB/sec.\par
+		However, since 4.608 TB/sec. is far greater than the 100 GB/sec. meaning that the throughput is not sustainable, but it is still achievable using on-chip cache in short-bursts.\par
+	
+	
+\question{3}{Non-textbook}
+
+	Assume a GPU architecture that contains 10 SIMD processors. Each SIMD instruction is 32 bits, and each SIMD processor contains 8 lanes for single precision arithmetic, and load/store instructions, meaning that each non-diverged SIMD instruction can produce 32 results every 4 cycles. Assume a kernel that has divergent branches that causes, on average 80\% of threads to be active. Also assume that 70\% of all instructions are SP arithmetic and 20\% load/store. Because not all memory latencies are covered, assume an average SIMD instruction issue rate of 0.85. Assume the GPU has a clock speed of 1.5 GHz. Compute the throughput, in GFLOP/sec, for this code on this GPU.\par
+	
+	\begin{align*}
+	\begin{split}
+	Throughput &= \textnormal{(clock speed)} * \textnormal{(average \# of threads active)} * \textnormal{(instruction issue rate)} \\
+	&* \textnormal{(SP instruction percentage)} * \textnormal{(\# of SIMD processors)} * \textnormal{(\# of results per cycle)}\\
+	\end{split}\\
+	&= 1.5 * 0.8 * 0.85 * 0.7 * 10 * 8\\
+	&= 57.12 \textnormal{ GFLOP/sec.}
+	\end{align*}
+
+\end{document}
